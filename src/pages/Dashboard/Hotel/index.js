@@ -1,3 +1,5 @@
+import HotelPage from '../../../components/Dashboard/Hotel';
+
 export default function Hotel() {
-  return 'Hotel: Em breve!';
+  return <HotelPage />;
 }
