@@ -33,9 +33,9 @@ export default function CardForm({ setSuccess }) {
     console.log(values);
     try {
       if(paymentInfo.hotel) {
-        await reserveTicket({type: paymentInfo.type, accommodation: paymentInfo.hotel}, token)
+        await reserveTicket({type: paymentInfo.type, accommodation: paymentInfo.hotel, cardData: values}, token)
       } else {
-        await reserveTicket({type: paymentInfo.type}, token);
+        await reserveTicket({type: paymentInfo.type, cardData: values}, token);
       }
 
       setSuccess(true);

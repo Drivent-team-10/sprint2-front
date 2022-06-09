@@ -5,7 +5,7 @@ import Button from '../../../Form/Button';
 
 import usePayment from '../../../../hooks/usePayment';
 
-import { StyledTypography, ButtonContainer } from '../style';
+import { StyledTypography, ButtonContainer } from '../../style';
 
 export default function Selection({ setIsReservationReady }) {
   const { paymentInfo, handleChange } = usePayment();
