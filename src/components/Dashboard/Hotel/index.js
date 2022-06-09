@@ -1,6 +1,7 @@
 import usePaymentData from '../../../hooks/api/usePayment';
 import { Box } from '@material-ui/core';
 import { StyledTypography } from '../style';
+import RoomSelection from './RoomSelection';
 
 export default function HotelPage() {
   const { payment } = usePaymentData();
@@ -21,11 +22,11 @@ export default function HotelPage() {
           ) : (
             <Box>
               <h3>hoteis aqui</h3>
-              <RoomSelection />
             </Box>
           )}
         </Box>
       }
+      <RoomSelection />
     </>
   );
 }
