@@ -9,7 +9,7 @@ export default function HotelPage() {
     <>
       <StyledTypography variant="h4">Ingresso e pagamento</StyledTypography>
       {
-        !payment ? (
+        !payment?.length ? (
           <Box display="flex" alignItems="center" justifyContent="center" height="100%">
             <StyledTypography variant="h6" color="textSecondary">
               Você precisa ter confirmado pagamento antes de fazer a escolha de hospedagem

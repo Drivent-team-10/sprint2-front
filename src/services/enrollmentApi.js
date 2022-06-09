@@ -21,7 +21,7 @@ export async function getPersonalInformations(token) {
     return response.data;
 
   } catch (error) {
-    console.log(error)
+    console.error();
   }
 }
 //

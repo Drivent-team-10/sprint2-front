@@ -7,7 +7,6 @@ export async function getPaymentInformations({ eventId, token }) {
           Authorization: `Bearer ${token}`,
         },
       });
-    
       return response.data;
   
     } catch (error) {
