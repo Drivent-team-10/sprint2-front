@@ -8,7 +8,7 @@ import useEnrollment from '../../../hooks/api/useEnrollment';
 import Selection from './Selection';
 import PaymentForm from './PaymentForm';
 
-import { StyledTypography, ButtonContainer } from './style';
+import { StyledTypography } from '../style';
 
 export default function PaymentPage() {
   const { token } = useToken();

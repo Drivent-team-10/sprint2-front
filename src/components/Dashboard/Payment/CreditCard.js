@@ -30,17 +30,16 @@ export default function CardForm({ setSuccess }) {
 
   async function handleSubmitPayment(e) {
     e.preventDefault();
-    console.log(values);
     try {
       if(paymentInfo.hotel) {
-        await reserveTicket({type: paymentInfo.type, accommodation: paymentInfo.hotel}, token)
+        await reserveTicket({type: paymentInfo.type, accommodation: paymentInfo.hotel, cardData: values}, token)
       } else {
-        await reserveTicket({type: paymentInfo.type}, token);
+        await reserveTicket({type: paymentInfo.type, cardData: values}, token);
       }
 
       setSuccess(true);
     } catch (error) {
-      console.log(error)
+      console.error();
       toast('Não foi possível reservar o ingresso!');
     }
   }
