@@ -1,6 +1,7 @@
 import usePaymentData from '../../../hooks/api/usePayment';
 import { Box } from '@material-ui/core';
 import { StyledTypography } from '../style';
+import DeckHotel from './DeckHotel';
 
 export default function HotelPage() {
   const { payment } = usePaymentData();
@@ -21,7 +22,14 @@ export default function HotelPage() {
                     <StyledTypography variant="h6" color="textSecondary">
                       Sua modalidade de ingresso não inclui hospedagem Prossiga para a escolha de atividades
                     </StyledTypography>
-                  : <h3>hoteis aqui</h3>
+                  : (
+                    <Box display="flex" marginTop='36px' flexDirection="column" alignItems="flex-start" justifyContent="center" height="100%">
+                      <StyledTypography variant="h6" color="textSecondary">
+                        Primeiro, escolha seu hotel
+                      </StyledTypography>
+                      <DeckHotel />
+                    </Box>
+                  )
             }
           </Box>
         
