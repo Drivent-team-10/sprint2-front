@@ -13,7 +13,7 @@ export async function reserveTicket(body, token) {
     },
   });
 
-  await api.post(`/reservations/${response.data.reservationId}/payment`, {
+  await api.post(`/reservations/${response.data.id}/payment`, {
     number: cardData.cardNumber,
     name: cardData.cardName,
     validThru: cardData.cardExpiration,
