@@ -13,6 +13,7 @@ import PaymentForm from './PaymentForm';
 
 import { StyledTypography } from '../style';
 import usePayment from '../../../hooks/usePayment';
+import { toast } from 'react-toastify';
 
 export default function PaymentPage() {
   const token = useToken();
@@ -36,12 +37,13 @@ export default function PaymentPage() {
         setIsReservationReady(true);
         setIsPayedFor(true);
       } catch (e) {
-        console.log('erro: ', e);
+        console.log(e);
+        toast('Não foi possível carregar as informações do seu pagamento, tente novamente mais tarde');
       }
     }
     verifyIfUserAlreadyPayed();
   }, [event]);
-  console.log('payment info: ', paymentInfo);
+
   return (
     <>
       <StyledTypography variant="h4">Ingresso e pagamento</StyledTypography>
