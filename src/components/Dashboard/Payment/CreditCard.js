@@ -22,22 +22,22 @@ const style = {
   },
 };
 
-export default function CardForm({ setSuccess }) {
+export default function CardForm() {
   const token = useToken();
-  const { paymentInfo } = usePayment();
+  const { paymentInfo, setIsPayedFor } = usePayment();
   const { handleChange, handleFocus, handleSubmit, values, errors } = useCardForm();
   const { reserveTicket } = useTicket();
 
   async function handleSubmitPayment(e) {
     e.preventDefault();
     try {
-      if(paymentInfo.hotel) {
-        await reserveTicket({type: paymentInfo.type, accommodation: paymentInfo.hotel, cardData: values}, token)
+      if (paymentInfo.hotel) {
+        await reserveTicket({ type: paymentInfo.type, accommodation: paymentInfo.hotel, cardData: values }, token);
       } else {
-        await reserveTicket({type: paymentInfo.type, cardData: values}, token);
+        await reserveTicket({ type: paymentInfo.type, cardData: values }, token);
       }
 
-      setSuccess(true);
+      setIsPayedFor(true);
     } catch (error) {
       console.error();
       toast('Não foi possível reservar o ingresso!');
