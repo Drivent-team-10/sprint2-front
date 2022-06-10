@@ -7,7 +7,6 @@ import PaymentConfirmation from './PaymentConfirmation';
 
 export default function PaymentForm() {
   const { paymentInfo, ticketPrice, isPayedFor } = usePayment();
-  const [success, setSuccess] = useState(false);
 
   function TicketDescription() {
     if (paymentInfo.type === 'online') {
@@ -36,7 +35,7 @@ export default function PaymentForm() {
         <StyledTypography variant="h6" color="textSecondary">
           Pagamento
         </StyledTypography>
-        {isPayedFor ? <PaymentConfirmation /> : <CardForm setSuccess={setSuccess} />}
+        {isPayedFor ? <PaymentConfirmation /> : <CardForm />}
       </Box>
     </Box>
   );
