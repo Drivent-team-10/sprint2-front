@@ -1,21 +1,47 @@
 /* eslint-disable no-console */
-import {useState } from 'react';
+import { useEffect, useState } from 'react';
 
 import { Box } from '@material-ui/core';
 import useToken from '../../../hooks/useToken';
 import useEnrollment from '../../../hooks/api/useEnrollment';
+import useEvent from '../../../hooks/api/useEvent';
+import { getPaymentInformations } from '../../../services/paymentApi';
+import { getReservation } from '../../../services/ticketApi';
 
 import Selection from './Selection';
 import PaymentForm from './PaymentForm';
 
 import { StyledTypography } from '../style';
+import usePayment from '../../../hooks/usePayment';
 
 export default function PaymentPage() {
-  const { token } = useToken();
+  const token = useToken();
+  const { event } = useEvent();
   const { enrollment } = useEnrollment();
+  const { paymentInfo, setIsPayedFor, setPaymentInfo, setTicketPrice } = usePayment();
 
   const [isReservationReady, setIsReservationReady] = useState(false);
 
+  useEffect(() => {
+    if (!event) return;
+    async function verifyIfUserAlreadyPayed() {
+      try {
+        const [payment] = await getPaymentInformations({ eventId: event.id, token });
+        if (!payment) {
+          return;
+        }
+        const reservation = await getReservation(payment.reservationId, token);
+        setPaymentInfo({ ...paymentInfo, type: reservation.type, hotel: reservation.accommodation });
+        setTicketPrice(`R$ ${reservation.amount / 100}`);
+        setIsReservationReady(true);
+        setIsPayedFor(true);
+      } catch (e) {
+        console.log('erro: ', e);
+      }
+    }
+    verifyIfUserAlreadyPayed();
+  }, [event]);
+  console.log('payment info: ', paymentInfo);
   return (
     <>
       <StyledTypography variant="h4">Ingresso e pagamento</StyledTypography>
@@ -33,5 +59,3 @@ export default function PaymentPage() {
     </>
   );
 }
-
-

@@ -1,4 +1,3 @@
-
 import { Box } from '@material-ui/core';
 import OptionButton from '../Option';
 import Button from '../../../Form/Button';
@@ -31,7 +30,7 @@ export default function Selection({ setIsReservationReady }) {
         <ButtonContainer>
           <OptionButton
             title={'Presencial'}
-            body={'R$ 250,00'}
+            body={'R$ 250'}
             value="presential"
             isSelected={paymentInfo.type === 'presential'}
             onClick={(e) => {
@@ -40,7 +39,7 @@ export default function Selection({ setIsReservationReady }) {
           />
           <OptionButton
             title={'Online'}
-            body={'R$ 100,00'}
+            body={'R$ 100'}
             value="online"
             isSelected={paymentInfo.type === 'online'}
             onClick={(e) => {
@@ -58,7 +57,7 @@ export default function Selection({ setIsReservationReady }) {
           </StyledTypography>
           <ButtonContainer>
             <OptionButton
-              title={'com hotel'}
+              title={'Com Hotel'}
               body={'+ R$ 0'}
               value="presential"
               isSelected={paymentInfo.hotel === false}
@@ -67,7 +66,7 @@ export default function Selection({ setIsReservationReady }) {
               }}
             />
             <OptionButton
-              title={'com hotel'}
+              title={'Com Hotel'}
               body={'+ R$ 350'}
               value="online"
               isSelected={paymentInfo.hotel === true}
