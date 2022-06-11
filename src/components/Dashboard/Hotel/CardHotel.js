@@ -1,3 +1,5 @@
+import useHotel from '../../../hooks/useHotel';
+
 import { BoxHotel, Description, StyledHotelTypography } from "./style";
 
 export default function CardHotel({ accommodation, type1, type2, type3 }) {
@@ -8,8 +10,18 @@ export default function CardHotel({ accommodation, type1, type2, type3 }) {
         occupation,
     } = accommodation;
 
+    const { handleChange } = useHotel();
+
     return (
-        <BoxHotel>
+        <BoxHotel
+            onClick={(e) => {
+            handleChange({
+                ...accommodation,
+                type1,
+                type2,
+                type3,
+            });
+        }}>
             <img width='168px' height='109px' style={{ borderRadius: '5px', objectFit: 'cover' }} src='https://http.cat/409.jpg' />
             <StyledHotelTypography variant="h6" color="textPrimary">
                 { name }
