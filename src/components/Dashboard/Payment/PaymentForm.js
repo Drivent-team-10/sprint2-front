@@ -1,14 +1,12 @@
-import { Box, Button, Typography } from '@material-ui/core';
-import CheckCircleIcon from '@mui/icons-material/CheckCircle';
+import { Box, Typography } from '@material-ui/core';
 import { useState } from 'react';
 import styled from 'styled-components';
 import usePayment from '../../../hooks/usePayment';
-import useCardForm from '../../../hooks/userCardForm';
 import CardForm from './CreditCard';
+import PaymentConfirmation from './PaymentConfirmation';
 
 export default function PaymentForm() {
-  const { paymentInfo, ticketPrice } = usePayment();
-  const [success, setSuccess] = useState(false);
+  const { paymentInfo, ticketPrice, isPayedFor } = usePayment();
 
   function TicketDescription() {
     if (paymentInfo.type === 'online') {
@@ -37,19 +35,7 @@ export default function PaymentForm() {
         <StyledTypography variant="h6" color="textSecondary">
           Pagamento
         </StyledTypography>
-        {success ? (
-          <Box sx={{ display: 'flex', flexDirection: 'row', gap: 15 }}>
-            <CheckCircleIcon style={{ fill: '#36B853', fontSize: '40.33px' }} />
-            <div>
-              <Typography>
-                <strong>Pagamento confirmado!</strong>
-              </Typography>
-              <StyledTypography>Prossiga para escolha de hospedagem e atividades</StyledTypography>
-            </div>
-          </Box>
-        ) : (
-          <CardForm setSuccess={setSuccess} />
-        )}
+        {isPayedFor ? <PaymentConfirmation /> : <CardForm />}
       </Box>
     </Box>
   );

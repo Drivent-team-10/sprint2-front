@@ -11,6 +11,7 @@ import { ToastContainer } from 'react-toastify';
 import { EventInfoProvider } from './contexts/EventInfoContext';
 import { UserProvider } from './contexts/UserContext';
 import { PaymentProvider } from './contexts/PaymentContext';
+import './assets/styles/overideStyles.css';
 
 ReactDOM.render(<>
   <ToastContainer />
