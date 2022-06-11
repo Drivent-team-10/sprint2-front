@@ -18,6 +18,7 @@ export default function DeckHotel({ setSelectedHotel }) {
       {hotels?.length
         ? hotels.map((hotel) => (
             <CardHotel
+              key={Math.random()}
               accommodation={hotel.accommodation}
               type1={hotel.type1}
               type2={hotel.type2}
