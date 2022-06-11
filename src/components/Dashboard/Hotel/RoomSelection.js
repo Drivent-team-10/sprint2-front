@@ -2,27 +2,51 @@ import { Box, Typography } from '@mui/material';
 import PersonOutlineRoundedIcon from '@mui/icons-material/PersonOutlineRounded';
 import PersonRoundedIcon from '@mui/icons-material/PersonRounded';
 import { useEffect, useState } from 'react';
-import { getAccommodationsRooms } from '../../../services/accommodationApi';
+import { getAccommodationsRooms, postAccommodationsRoom } from '../../../services/accommodationApi';
 import styled from 'styled-components';
 import useToken from '../../../hooks/useToken';
 import Button from '../../Form/Button';
+import { toast } from 'react-toastify';
+import usePayment from '../../../hooks/usePayment';
+import { getReservation } from '../../../services/ticketApi';
+import usePaymentData from '../../../hooks/api/usePayment';
 
 export default function RoomSelection() {
   const token = useToken();
+  const { payment } = usePaymentData();
+  const { reservation, setReservation } = usePayment();
+
   const [selectedRoom, setSelectedRoom] = useState(null);
   const [rooms, setRooms] = useState(null);
 
   useEffect(() => {
-    async function loadRooms() {
-      const response = await getAccommodationsRooms(token);
-      setRooms(response);
-      try {
-      } catch (e) {
-        console.log(e);
+    if (!payment) return;
+
+    try {
+      async function loadReservation() {
+        const response = await getReservation(payment[0].reservationId, token);
+        setReservation(response);
       }
+      async function loadRooms() {
+        const response = await getAccommodationsRooms(token);
+        setRooms(response);
+      }
+      loadReservation();
+      loadRooms();
+    } catch (e) {
+      toast(e);
     }
-    loadRooms();
-  }, []);
+  }, [payment]);
+
+  async function handleRoomSubmit() {
+    try {
+      await postAccommodationsRoom(selectedRoom, reservation.id, token);
+
+      // REDIRECIONAR PARA A TELA DE RESUMO
+    } catch (e) {
+      toast('Não foi possível reservar o quarto no momento. Tente novamente mais tarde!');
+    }
+  }
 
   function renderRoomCapacity(room, isSelected) {
     const capacity = [...new Array(room.typeId)].map((value, index) => index + 1 > room.occupation);
@@ -43,6 +67,7 @@ export default function RoomSelection() {
   if (!rooms) {
     return 'carregando';
   }
+
   return (
     <Box>
       <Typography variant="h6" color="textSecondary">
@@ -91,7 +116,11 @@ export default function RoomSelection() {
           );
         })}
       </Box>
-      <Button disabled={!selectedRoom}>Reservar Quarto</Button>
+      {selectedRoom && (
+        <Button disabled={!selectedRoom} onClick={handleRoomSubmit}>
+          Reservar Quarto
+        </Button>
+      )}
     </Box>
   );
 }

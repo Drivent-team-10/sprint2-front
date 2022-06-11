@@ -19,7 +19,7 @@ export default function PaymentPage() {
   const token = useToken();
   const { event } = useEvent();
   const { enrollment } = useEnrollment();
-  const { paymentInfo, setIsPayedFor, setPaymentInfo, setTicketPrice } = usePayment();
+  const { paymentInfo, setIsPayedFor, setPaymentInfo, setTicketPrice, setReservation } = usePayment();
 
   const [isReservationReady, setIsReservationReady] = useState(false);
 
@@ -32,6 +32,7 @@ export default function PaymentPage() {
           return;
         }
         const reservation = await getReservation(payment.reservationId, token);
+        setReservation(reservation);
         setPaymentInfo({ ...paymentInfo, type: reservation.type, hotel: reservation.accommodation });
         setTicketPrice(`R$ ${reservation.amount / 100}`);
         setIsReservationReady(true);
