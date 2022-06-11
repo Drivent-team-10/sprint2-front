@@ -10,11 +10,13 @@ import { toast } from 'react-toastify';
 import usePayment from '../../../hooks/usePayment';
 import { getReservation } from '../../../services/ticketApi';
 import usePaymentData from '../../../hooks/api/usePayment';
+import useHotel from '../../../hooks/useHotel';
 
 export default function RoomSelection() {
   const token = useToken();
   const { payment } = usePaymentData();
   const { reservation, setReservation } = usePayment();
+  const { hotelInfo } = useHotel();
 
   const [selectedRoom, setSelectedRoom] = useState(null);
   const [rooms, setRooms] = useState(null);
@@ -28,7 +30,8 @@ export default function RoomSelection() {
         setReservation(response);
       }
       async function loadRooms() {
-        const response = await getAccommodationsRooms(token);
+        const { id } = hotelInfo;
+        const response = await getAccommodationsRooms(id, token);
         setRooms(response);
       }
       loadReservation();
@@ -36,7 +39,7 @@ export default function RoomSelection() {
     } catch (e) {
       toast(e);
     }
-  }, [payment]);
+  }, [payment, hotelInfo]);
 
   async function handleRoomSubmit() {
     try {
@@ -49,7 +52,7 @@ export default function RoomSelection() {
   }
 
   function renderRoomCapacity(room, isSelected) {
-    const capacity = [...new Array(room.typeId)].map((value, index) => index + 1 > room.occupation);
+    const capacity = [...new Array(room.type.capacity)].map((value, index) => index + 1 > room.occupation);
 
     if (isSelected) {
       let freeSpace = capacity.findIndex((space) => space);
@@ -67,6 +70,8 @@ export default function RoomSelection() {
   if (!rooms) {
     return 'carregando';
   }
+
+  console.log(rooms);
 
   return (
     <Box>
