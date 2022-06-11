@@ -10,7 +10,6 @@ export default function HotelPage() {
   const { payment } = usePaymentData();
   const { hotelInfo } = useHotel();
 
-  console.log(hotelInfo);
   return (
     <>
       <StyledTypography variant="h4">Ingresso e pagamento</StyledTypography>

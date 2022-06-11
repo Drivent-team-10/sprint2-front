@@ -17,7 +17,6 @@ export default function RoomSelection() {
   const { payment } = usePaymentData();
   const { reservation, setReservation } = usePayment();
   const { hotelInfo } = useHotel();
-
   const [selectedRoom, setSelectedRoom] = useState(null);
   const [rooms, setRooms] = useState(null);
 
@@ -70,8 +69,6 @@ export default function RoomSelection() {
   if (!rooms) {
     return 'carregando';
   }
-
-  console.log(rooms);
 
   return (
     <Box>

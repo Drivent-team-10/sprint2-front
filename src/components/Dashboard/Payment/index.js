@@ -38,7 +38,6 @@ export default function PaymentPage() {
         setIsReservationReady(true);
         setIsPayedFor(true);
       } catch (e) {
-        console.log(e);
         toast('Não foi possível carregar as informações do seu pagamento, tente novamente mais tarde');
       }
     }

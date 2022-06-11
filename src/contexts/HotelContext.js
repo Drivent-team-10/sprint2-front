@@ -13,15 +13,10 @@ export function HotelProvider({ children }) {
     type2: null,
     type3: null,
   });
-  
-  function handleChange(hotel) {
-    setHotelInfo({ ...hotel })
-  }
-  console.log(hotelInfo);
 
-  return (
-    <HotelContext.Provider value={{ hotelInfo, setHotelInfo, handleChange }}>
-      {children}
-    </HotelContext.Provider>
-  );
+  function handleChange(hotel) {
+    setHotelInfo({ ...hotel });
+  }
+
+  return <HotelContext.Provider value={{ hotelInfo, setHotelInfo, handleChange }}>{children}</HotelContext.Provider>;
 }
