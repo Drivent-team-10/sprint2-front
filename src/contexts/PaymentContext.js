@@ -11,6 +11,7 @@ export function PaymentProvider({ children }) {
   });
   const [ticketPrice, setTicketPrice] = useState(null);
   const [isPayedFor, setIsPayedFor] = useState(false);
+  const [reservation, setReservation] = useState();
 
   function handleChange(key, value) {
     const isValid = validateKeyValuePair(key, value);
@@ -38,7 +39,17 @@ export function PaymentProvider({ children }) {
 
   return (
     <PaymentContext.Provider
-      value={{ paymentInfo, setPaymentInfo, handleChange, ticketPrice, setTicketPrice, isPayedFor, setIsPayedFor }}
+      value={{
+        paymentInfo,
+        setPaymentInfo,
+        handleChange,
+        ticketPrice,
+        setTicketPrice,
+        isPayedFor,
+        setIsPayedFor,
+        reservation,
+        setReservation,
+      }}
     >
       {children}
     </PaymentContext.Provider>
