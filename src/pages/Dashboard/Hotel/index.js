@@ -1,4 +1,4 @@
-import HotelPage from "../../../components/Dashboard/Hotel";
+import HotelPage from '../../../components/Dashboard/Hotel';
 
 export default function Hotel() {
   return <HotelPage />;

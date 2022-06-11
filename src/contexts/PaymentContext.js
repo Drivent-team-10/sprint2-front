@@ -10,6 +10,7 @@ export function PaymentProvider({ children }) {
     cardData: null,
   });
   const [ticketPrice, setTicketPrice] = useState(null);
+  const [isPayedFor, setIsPayedFor] = useState(false);
 
   function handleChange(key, value) {
     const isValid = validateKeyValuePair(key, value);
@@ -22,21 +23,23 @@ export function PaymentProvider({ children }) {
     }
 
     if (key === 'type' && value === 'online') {
-      setTicketPrice('100,00');
+      setTicketPrice('100');
       return setPaymentInfo({ ...paymentInfo, [key]: value, hotel: null });
     }
 
     if (key === 'hotel' && value === true) {
-      setTicketPrice('600,00');
+      setTicketPrice('600');
       return setPaymentInfo({ ...paymentInfo, [key]: value });
     }
 
-    setTicketPrice('250,00');
+    setTicketPrice('250');
     setPaymentInfo({ ...paymentInfo, [key]: value });
   }
 
   return (
-    <PaymentContext.Provider value={{ paymentInfo, setPaymentInfo, handleChange, ticketPrice }}>
+    <PaymentContext.Provider
+      value={{ paymentInfo, setPaymentInfo, handleChange, ticketPrice, setTicketPrice, isPayedFor, setIsPayedFor }}
+    >
       {children}
     </PaymentContext.Provider>
   );
