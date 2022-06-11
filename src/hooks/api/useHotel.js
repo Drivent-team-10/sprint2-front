@@ -4,14 +4,14 @@ import * as hotelApi from '../../services/hotelApi';
 
 export default function useHotelData() {
   const {
-    data: hotel,
+    data: hotels,
     loading: hotelLoading,
     error: hotelError,
     act: getHotel,
   } = useAsync(() => hotelApi.getHotelInformation({ eventId: 1 }));
 
   return {
-    hotel,
+    hotels,
     hotelLoading,
     hotelError,
     getHotel,
