@@ -5,10 +5,14 @@ import DeckHotel from './DeckHotel';
 import RoomSelection from './RoomSelection';
 import { useState } from 'react';
 import useHotel from '../../../hooks/useHotel';
+import usePayment from '../../../hooks/usePayment';
+import ChangeRoomsButton from './ChangeRoomsButton';
 
 export default function HotelPage() {
   const { payment } = usePaymentData();
   const { hotelInfo } = useHotel();
+  const { reservation } = usePayment();
+  const [changeRooms, setChangeRooms] = useState(false);
 
   return (
     <>
@@ -37,8 +41,13 @@ export default function HotelPage() {
                 Primeiro, escolha seu hotel
               </StyledTypography>
               <div sx={{ width: '95%' }}>
-                <DeckHotel />
-                {hotelInfo.name && <RoomSelection />}
+                {changeRooms ? (
+                  <>
+                    <DeckHotel /> {hotelInfo && <RoomSelection />}
+                  </>
+                ) : (
+                  <ChangeRoomsButton setChangeRooms={setChangeRooms} />
+                )}
               </div>
             </Box>
           )}
