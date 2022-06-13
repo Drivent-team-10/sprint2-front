@@ -16,7 +16,6 @@ export default function GitHubOAuthPage() {
         const code = urlParams.get('code');
 
         const data = await signIpWithGithub(code);
-        console.log('userData: ', data);
 
         setUserData(data);
         toast('Login realizado com sucesso!');
