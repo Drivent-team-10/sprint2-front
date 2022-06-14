@@ -17,9 +17,11 @@ export default function Activities() {
     <Box>
       <Typography variant="h4">Escolha de atividades</Typography>
       <Box sx={{ margin: '36px 0 0 0' }}>
-        <Typography variant="h6" color="textSecondary">
-          Primeiro, filtre pelo dia do evento:{' '}
-        </Typography>
+        {Object.keys(props).length === 0 && (
+          <Typography variant="h6" color="textSecondary">
+            Primeiro, filtre pelo dia do evento:
+          </Typography>
+        )}
         <Box sx={{ display: 'flex', gap: '17px' }}>
           {daysMock.map((day, i) => (
             <Button key={i} sx={props[i]} onClick={(e) => handleSelection(i)}>
