@@ -3,16 +3,23 @@ import { Box, Container } from '@material-ui/core';
 import { StyledTypography } from '../style';
 import DeckHotel from './DeckHotel';
 import RoomSelection from './RoomSelection';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import useHotel from '../../../hooks/useHotel';
-import usePayment from '../../../hooks/usePayment';
 import ChangeRoomsButton from './ChangeRoomsButton';
+import { useSelectedHotelData } from '../../../hooks/api/useHotel';
+import useEnrollment from '../../../hooks/api/useEnrollment';
 
 export default function HotelPage() {
   const { payment } = usePaymentData();
   const { hotelInfo } = useHotel();
-  const { reservation } = usePayment();
   const [changeRooms, setChangeRooms] = useState(false);
+
+  const { enrollment } = useEnrollment();
+
+  const hotel = useSelectedHotelData({ enrollmentId: enrollment?.id })
+
+  useEffect(() => {
+  }, [enrollment, hotel]);
 
   return (
     <>
@@ -32,18 +39,29 @@ export default function HotelPage() {
               display="flex"
               marginTop="36px"
               flexDirection="column"
-              alignItems="flex-start"
-              justifyContent="center"
+              alignSelf="flex-start"
+              justifySelf="center"
               width="100%"
-              height="100%"
+              max-height="100%"
             >
               <StyledTypography variant="h6" color="textSecondary">
                 Primeiro, escolha seu hotel
               </StyledTypography>
-              <div sx={{ width: '95%' }}>
-                {changeRooms ? (
+              {
+                !hotel ?
                   <>
                     <DeckHotel /> {hotelInfo && <RoomSelection />}
+                  </>
+                  : 
+                  <>
+                    <DeckHotel /> {hotelInfo && <RoomSelection />}
+                  </>
+                   
+              }
+              <div sx={{ width: '95%' }}>
+                {changeRooms ? (
+                  
+                  <>
                   </>
                 ) : (
                   <ChangeRoomsButton setChangeRooms={setChangeRooms} />

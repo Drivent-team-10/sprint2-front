@@ -17,3 +17,19 @@ export default function useHotelData() {
     getHotel,
   };
 }
+
+export function useSelectedHotelData({ enrollmentId }) {
+  const {
+    data: hotel,
+    loading: hotelLoading,
+    error: hotelError,
+    act: getHotel,
+  } = useAsync(() => hotelApi.getSelectedHotelInformation({ enrollmentId }));
+
+  return {
+    hotel,
+    hotelLoading,
+    hotelError,
+    getHotel,
+  };
+}
