@@ -9,6 +9,7 @@ export function HotelProvider({ children }) {
     name: null,
     capacityTotal: null,
     occupation: null,
+    image: null,
     type1: null,
     type2: null,
     type3: null,

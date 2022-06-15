@@ -15,14 +15,16 @@ export const StyledHotelTypography = styled(Typography)`
 
 export const BoxHotel = styled(Box)`
   height: 50%;
-
-  background-color: #f1f1f1;
-  border-radius: 10px;
-
+  
+  cursor: pointer;
+  
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: space-around;
+  
+  background-color: ${(props) => (props.selected ? '#ffeed2' : '#f1f1f1')};
+  border-radius: 10px;
 
   box-sizing: border-box;
   padding: 16px;
@@ -33,7 +35,6 @@ export const Description = styled(Box)`
 
   text-align: left;
 
-  background-color: #f1f1f1;
   border-radius: 10px;
 
   display: flex;

@@ -23,7 +23,6 @@ export default function DeckHotel({ setSelectedHotel }) {
               type1={hotel.type1}
               type2={hotel.type2}
               type3={hotel.type3}
-              onClick={() => setSelectedHotel(hotel)}
             />
           ))
         : ''}
