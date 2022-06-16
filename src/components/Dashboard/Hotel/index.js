@@ -15,8 +15,6 @@ export default function HotelPage() {
   const { hotelInfo } = useHotel();
   const [changeRooms, setChangeRooms] = useState(false);
 
-  
-
   const hotelData = useSelectedHotelData();
   useEffect(() => {
   }, [hotelData, useSelectedHotelData]);
@@ -46,13 +44,13 @@ export default function HotelPage() {
             >
               <StyledTypography variant="h6" color="textSecondary">
                 {
-                  hotelData ?
+                  hotelData?.hotel ?
                     'Você já escolheu seu quarto:'
                   : 'Primeiro, escolha seu hotel'
                 }
               </StyledTypography>
               {
-                hotelData ?
+                hotelData?.hotel  ?
                   <>
                     <HotelSelected
                       key={Math.random()}
