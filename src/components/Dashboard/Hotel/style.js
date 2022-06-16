@@ -14,6 +14,7 @@ export const StyledHotelTypography = styled(Typography)`
 `;
 
 export const BoxHotel = styled(Box)`
+  width: 168px;
   height: 50%;
   
   cursor: pointer;
@@ -27,7 +28,7 @@ export const BoxHotel = styled(Box)`
   border-radius: 10px;
 
   box-sizing: border-box;
-  padding: 16px;
+  padding: 16px 0px;
 `;
 
 export const Description = styled(Box)`
