@@ -1,39 +1,52 @@
 import { useEffect, useState } from 'react';
 import useHotel from '../../../hooks/useHotel';
+import HotelDescription from './HotelDescription';
+import HotelSelectedDescription from './HotelSelectedDescription';
 
 import { BoxHotel, Description, StyledHotelTypography } from "./style";
 
-export default function CardHotel({ accommodation, type1, type2, type3, setSelectedHotel }) {
-	const {
-		id,
-		name,
-		image,
-		capacityTotal,
-		occupation,
-	} = accommodation;
-
+export default function CardHotel({
+  id,
+  name,
+  image,
+  capacityTotal,
+  occupation,
+  type1,
+  type2,
+  type3,
+  hotelSelected,
+}) {
   const { hotelInfo } = useHotel();
 
 	let [selected, setSelected] = useState(false);
-	const { handleChange, set } = useHotel();
+	const { handleChange } = useHotel();
 	
 	useEffect(() => {
     if (hotelInfo && hotelInfo.id === id) {
       setSelected(true);
     }
-  }, [hotelInfo, selected])
 
+    if(hotelSelected) {
+      setSelected(true);
+    }
+  }, [hotelInfo, selected])
+  
 	return (
 		<BoxHotel
 				value={selected}
 				onClick={(e) => {
 					handleChange({
-						...accommodation,
+						id,
+            name,
+            image,
+            capacityTotal,
+            occupation,
 						type1,
 						type2,
 						type3,
 					});
 				}}
+        disabled={ !!hotelSelected }
         selected={ selected }
 		>
 			<img width='168px' height='109px' style={{ borderRadius: '5px', objectFit: 'cover' }} src={ image } />
@@ -41,36 +54,23 @@ export default function CardHotel({ accommodation, type1, type2, type3, setSelec
 				{ name }
 			</StyledHotelTypography>
 			<Description>
-				<StyledHotelTypography sx={{ lineHeigth: '1rem' }} color="textPrimary">
-					<span><strong>Tipos de acomodação:</strong></span>
-					<br />
-					<span>
-						{
-							type1 ?
-									'Single'
-							: ''
-						}
-						{
-							type2 ?
-									type1 ?
-											', Double'
-									: 'Double'
-							: ''
-						}
-						{
-							type3 ?
-									type2 | type1 ?
-											', Triple'
-									: 'Triple'
-							: ''
-						}
-					</span>
-				</StyledHotelTypography>
-				<StyledHotelTypography color="textPrimary">
-					<span><strong>Vagas disponíveis:</strong></span>
-					<br />
-					<span>{ capacityTotal - occupation } </span>
-				</StyledHotelTypography>
+				{
+          !hotelSelected ?
+            <HotelDescription
+              type1={ type1 }
+              type2={ type2 }
+              type3={ type3 }
+              capacityTotal={ capacityTotal}
+              occupation={ occupation }
+            />
+          : 
+            <HotelSelectedDescription
+              number={ hotelSelected?.number }
+              type={ hotelSelected?.type?.name }
+              capacityTotal={ capacityTotal}
+              occupation={ occupation }
+            />
+        }
 			</Description>
 				
 		</BoxHotel>

@@ -23,7 +23,7 @@ export default function GitHubOAuthPage() {
       }
       login();
     } catch (e) {
-      console.log(e);
+      console.error();
     }
   }, []);
   return <Splash loading={true} message="Carregando informações do github" />;

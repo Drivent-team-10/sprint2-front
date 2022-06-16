@@ -57,7 +57,7 @@ export default function Selection({ setIsReservationReady }) {
           </StyledTypography>
           <ButtonContainer>
             <OptionButton
-              title={'Com Hotel'}
+              title={'Sem Hotel'}
               body={'+ R$ 0'}
               value="presential"
               isSelected={paymentInfo.hotel === false}
