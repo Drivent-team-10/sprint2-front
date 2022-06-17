@@ -7,19 +7,17 @@ import { useEffect, useState } from 'react';
 import useHotel from '../../../hooks/useHotel';
 import ChangeRoomsButton from './ChangeRoomsButton';
 import { useSelectedHotelData } from '../../../hooks/api/useHotel';
-import useEnrollment from '../../../hooks/api/useEnrollment';
+import CardHotel from './CardHotel';
+import HotelSelected from './HotelSelected';
 
 export default function HotelPage() {
   const { payment } = usePaymentData();
   const { hotelInfo } = useHotel();
   const [changeRooms, setChangeRooms] = useState(false);
 
-  const { enrollment } = useEnrollment();
-
-  const hotel = useSelectedHotelData({ enrollmentId: enrollment?.id })
-
+  const hotelData = useSelectedHotelData();
   useEffect(() => {
-  }, [enrollment, hotel]);
+  }, [hotelData, useSelectedHotelData]);
 
   return (
     <>
@@ -30,7 +28,7 @@ export default function HotelPage() {
             <StyledTypography variant="h6" color="textSecondary">
               Você precisa ter confirmado pagamento antes de fazer a escolha de hospedagem
             </StyledTypography>
-          ) : !payment[0]?.Reservation?.accommodation ? (
+          ) : !payment[0]?.reservation?.accommodation ? (
             <StyledTypography variant="h6" color="textSecondary">
               Sua modalidade de ingresso não inclui hospedagem Prossiga para a escolha de atividades
             </StyledTypography>
@@ -45,24 +43,39 @@ export default function HotelPage() {
               max-height="100%"
             >
               <StyledTypography variant="h6" color="textSecondary">
-                Primeiro, escolha seu hotel
+                {
+                  hotelData?.hotel ?
+                    'Você já escolheu seu quarto:'
+                  : 'Primeiro, escolha seu hotel'
+                }
               </StyledTypography>
               {
-                !hotel ?
+                hotelData?.hotel  ?
                   <>
-                    <DeckHotel /> {hotelInfo && <RoomSelection />}
+                    <HotelSelected
+                      key={Math.random()}
+                      id={hotelData.hotel?.accommodation?.id}
+                      name={hotelData.hotel?.accommodation?.name}
+                      image={hotelData.hotel?.accommodation?.image}
+                      capacityTotal={hotelData.hotel?.accommodation?.capacityTotal}
+                      occupation={hotelData.hotel?.accommodation?.occupation}
+                      hotelSelected={hotelData.hotel}
+                    />
+                    {
+                      changeRooms ?
+                        hotelData && <RoomSelection />
+                      : ''
+                    }
                   </>
                   : 
                   <>
                     <DeckHotel /> {hotelInfo && <RoomSelection />}
                   </>
                    
-              }
+                  }
               <div sx={{ width: '95%' }}>
                 {changeRooms ? (
-                  
-                  <>
-                  </>
+                  ''
                 ) : (
                   <ChangeRoomsButton setChangeRooms={setChangeRooms} />
                 )}

@@ -1,9 +1,12 @@
 import { Box } from '@material-ui/core';
+import { useEffect } from 'react';
 import useHotelData from '../../../hooks/api/useHotel';
 import CardHotel from './CardHotel';
 
 export default function DeckHotel({ setSelectedHotel }) {
   const { hotels } = useHotelData();
+
+  useEffect(() => {}, [hotels])
 
   return (
     <Box
@@ -19,7 +22,11 @@ export default function DeckHotel({ setSelectedHotel }) {
         ? hotels.map((hotel) => (
             <CardHotel
               key={Math.random()}
-              accommodation={hotel.accommodation}
+              id={hotel.accommodation.id}
+              name={hotel.accommodation.name}
+              image={hotel.accommodation.image}
+              capacityTotal={hotel.accommodation.capacityTotal}
+              occupation={hotel.accommodation.occupation}
               type1={hotel.type1}
               type2={hotel.type2}
               type3={hotel.type3}
