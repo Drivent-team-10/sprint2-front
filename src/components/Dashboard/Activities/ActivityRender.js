@@ -114,7 +114,7 @@ export default function Activities() {
 }
 
 const styles = {
-  container: { display: 'flex', width: '864px', mt: 4 },
+  container: { display: 'flex', width: '864px', mt: 4, gap: '10px' },
   auditoriumContainer: { display: 'flex', flexDirection: 'column', width: '33%' },
   activityContainer: {
     minHeight: '50vh',
