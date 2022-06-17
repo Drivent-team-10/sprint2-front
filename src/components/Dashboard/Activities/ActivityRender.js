@@ -5,6 +5,7 @@ import useToken from '../../../hooks/useToken';
 import { getActivitiesByEventId } from '../../../services/activityApi';
 import dayjs from 'dayjs';
 import updateLocale from 'dayjs/plugin/updateLocale';
+import Activity from './Activity';
 
 dayjs.extend(updateLocale);
 
@@ -92,15 +93,17 @@ export default function Activities() {
           <Box sx={styles.container}>
             {auditoriums.map((auditorium, i) => (
               <Box sx={styles.auditoriumContainer}>
-                <Typography key={`${i}${auditorium}`}> {auditorium} </Typography>
-                <Container key={i} sx={styles.activityContainer}>
+                <Typography key={`${i}${auditorium}`} color="textSecondary">
+                  {auditorium}
+                </Typography>
+                <Box key={i} sx={styles.activityContainer}>
                   {activities.map((activity) => {
                     const isActivityFromDayFiltered = formatDayDisplay(activity.startsAt) === dayFilter;
                     if (activity.auditorium.name === auditorium && isActivityFromDayFiltered) {
-                      return <Paper> {activity.name} </Paper>;
+                      return <Activity> {activity.name} </Activity>;
                     }
                   })}
-                </Container>
+                </Box>
               </Box>
             ))}
           </Box>
@@ -111,7 +114,14 @@ export default function Activities() {
 }
 
 const styles = {
-  container: { display: 'flex', width: '100%', maxWidth: '864px' },
-  auditoriumContainer: { display: 'flex', flexDirection: 'column', border: '1px solid #D7D7D7' },
-  activityContainer: { display: 'flex', flexDirection: 'column' },
+  container: { display: 'flex', width: '864px', mt: 4 },
+  auditoriumContainer: { display: 'flex', flexDirection: 'column', width: '33%' },
+  activityContainer: {
+    minHeight: '50vh',
+    padding: '9px 14px 10px 9px',
+    display: 'flex',
+    flexDirection: 'column',
+    gap: '10px',
+    border: '1px solid #D7D7D7',
+  },
 };
