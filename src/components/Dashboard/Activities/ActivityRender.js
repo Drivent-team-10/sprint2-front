@@ -5,6 +5,7 @@ import useToken from '../../../hooks/useToken';
 import { getActivitiesByEventId } from '../../../services/activityApi';
 import dayjs from 'dayjs';
 import updateLocale from 'dayjs/plugin/updateLocale';
+import Activity from './Activity';
 
 dayjs.extend(updateLocale);
 
@@ -97,7 +98,7 @@ export default function Activities() {
                   {activities.map((activity) => {
                     const isActivityFromDayFiltered = formatDayDisplay(activity.startsAt) === dayFilter;
                     if (activity.auditorium.name === auditorium && isActivityFromDayFiltered) {
-                      return <Button> {activity.name} </Button>;
+                      return <Activity> {activity.name} </Activity>;
                     }
                   })}
                 </Container>
@@ -112,5 +113,5 @@ export default function Activities() {
 
 const styles = {
   container: { display: 'flex', gap: '17px' },
-  activityContainer: { display: 'flex', flexDirection: 'column' },
+  activityContainer: { display: 'flex', flexDirection: 'column', gap: '10px' },
 };
