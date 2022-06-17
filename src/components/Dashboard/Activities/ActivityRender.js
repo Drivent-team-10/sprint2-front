@@ -112,7 +112,7 @@ export default function Activities() {
 }
 
 const styles = {
-  container: { display: 'flex', width: '100%', maxWidth: '864px' },
+  container: { display: 'flex', width: '100%' },
   auditoriumContainer: { display: 'flex', flexDirection: 'column', border: '1px solid #D7D7D7' },
   activityContainer: { display: 'flex', flexDirection: 'column' },
 };
