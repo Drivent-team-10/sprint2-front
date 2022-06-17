@@ -1,4 +1,4 @@
-import { Box, Container, Typography } from '@material-ui/core';
+import { Box, Container, Paper, Typography } from '@material-ui/core';
 import { useEffect, useState } from 'react';
 import Button from '../../Form/Button';
 import useToken from '../../../hooks/useToken';
@@ -91,13 +91,13 @@ export default function Activities() {
         {dayFilter && (
           <Box sx={styles.container}>
             {auditoriums.map((auditorium, i) => (
-              <Box sx={styles.activityContainer}>
+              <Box sx={styles.auditoriumContainer}>
                 <Typography key={`${i}${auditorium}`}> {auditorium} </Typography>
-                <Container key={i}>
+                <Container key={i} sx={styles.activityContainer}>
                   {activities.map((activity) => {
                     const isActivityFromDayFiltered = formatDayDisplay(activity.startsAt) === dayFilter;
                     if (activity.auditorium.name === auditorium && isActivityFromDayFiltered) {
-                      return <Button> {activity.name} </Button>;
+                      return <Paper> {activity.name} </Paper>;
                     }
                   })}
                 </Container>
@@ -111,6 +111,7 @@ export default function Activities() {
 }
 
 const styles = {
-  container: { display: 'flex', gap: '17px' },
+  container: { display: 'flex', width: '100%', maxWidth: '864px' },
+  auditoriumContainer: { display: 'flex', flexDirection: 'column', border: '1px solid #D7D7D7' },
   activityContainer: { display: 'flex', flexDirection: 'column' },
 };
