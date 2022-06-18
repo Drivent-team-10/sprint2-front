@@ -2,6 +2,7 @@ import usePaymentData from '../../../hooks/api/usePayment';
 import { Box } from '@material-ui/core';
 import { StyledTypography } from '../style';
 import Activities from './ActivityRender';
+import TextWarn from '../../TextWarn';
 
 export default function HotelPage() {
   const { payment } = usePaymentData();
@@ -12,18 +13,12 @@ export default function HotelPage() {
       {
         <>
           {!payment?.length ? (
-            <Box display="flex" alignItems="center" justifyContent="center" height="80%">
-              <StyledTypography variant="h6" color="textSecondary">
-                Você precisa ter confirmado pagamento antes de fazer a escolha de atividades
-              </StyledTypography>
-            </Box>
+            <TextWarn>Você precisa ter confirmado pagamento antes de fazer a escolha de atividades</TextWarn>
           ) : payment[0].reservation.type === 'online' ? (
-            <Box display="flex" alignItems="center" justifyContent="center" height="80%">
-              <StyledTypography variant="h6" color="textSecondary">
-                Sua modalidade de ingresso não necessita escolher atividade.
-                <br /> Você terá acesso a todas as atividades.
-              </StyledTypography>
-            </Box>
+            <TextWarn>
+              Sua modalidade de ingresso não necessita escolher atividade.
+              <br /> Você terá acesso a todas as atividades.
+            </TextWarn>
           ) : (
             <Activities />
           )}
