@@ -6,6 +6,7 @@ import { getActivitiesByEventId } from '../../../services/activityApi';
 import dayjs from 'dayjs';
 import updateLocale from 'dayjs/plugin/updateLocale';
 import Activity from './Activity';
+import JoinButton from './JoinButton';
 
 dayjs.extend(updateLocale);
 
@@ -29,7 +30,7 @@ export default function Activities() {
     try {
       loadActivities();
     } catch (e) {
-      console.log(e);
+      console.error();
     }
   }, []);
 
@@ -100,10 +101,16 @@ export default function Activities() {
                   {activities.map((activity) => {
                     const isActivityFromDayFiltered = formatDayDisplay(activity.startsAt) === dayFilter;
                     if (activity.auditorium.name === auditorium && isActivityFromDayFiltered) {
-                      return <Activity> {activity.name} </Activity>;
+                      return (
+                        <Activity>
+                          {activity.name}
+                          <JoinButton activityId={ activity.id } activityVacancies={activity?.vacancies} />
+                        </Activity>
+                      );
                     }
                   })}
                 </Box>
+                
               </Box>
             ))}
           </Box>
