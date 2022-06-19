@@ -75,47 +75,38 @@ export default function Activities() {
   }
 
   return (
-    <Box>
-      <Typography variant="h4">Escolha de atividades</Typography>
-      <Box sx={{ margin: '36px 0 0 0' }}>
-        {Object.keys(props).length === 0 && (
-          <Typography variant="h6" color="textSecondary">
-            Primeiro, filtre pelo dia do evento:
-          </Typography>
-        )}
+    <Box sx={{ margin: '36px 0 0 0' }}>
+      {Object.keys(props).length === 0 && (
+        <Typography variant="h6" color="textSecondary">
+          Primeiro, filtre pelo dia do evento:
+        </Typography>
+      )}
+      <Box sx={styles.container}>
+        {daysOfEvent.map((day, i) => (
+          <Button key={`${i}${day}`} sx={props[i]} onClick={(e) => handleSelection(i, day)}>
+            {day}
+          </Button>
+        ))}
+      </Box>
+      {dayFilter && (
         <Box sx={styles.container}>
-          {daysOfEvent.map((day, i) => (
-            <Button key={`${i}${day}`} sx={props[i]} onClick={(e) => handleSelection(i, day)}>
-              {day}
-            </Button>
+          {auditoriums.map((auditorium, i) => (
+            <Box sx={styles.auditoriumContainer}>
+              <Typography key={`${i}${auditorium}`} color="textSecondary">
+                {auditorium}
+              </Typography>
+              <Box key={i} sx={styles.activityContainer}>
+                {activities.map((activity) => {
+                  const isActivityFromDayFiltered = formatDayDisplay(activity.startsAt) === dayFilter;
+                  if (activity.auditorium.name === auditorium && isActivityFromDayFiltered) {
+                    return <Activity> {activity.name} </Activity>;
+                  }
+                })}
+              </Box>
+            </Box>
           ))}
         </Box>
-        {dayFilter && (
-          <Box sx={styles.container}>
-            {auditoriums.map((auditorium, i) => (
-              <Box sx={styles.auditoriumContainer}>
-                <Typography key={`${i}${auditorium}`} color="textSecondary">
-                  {auditorium}
-                </Typography>
-                <Box key={i} sx={styles.activityContainer}>
-                  {activities.map((activity) => {
-                    const isActivityFromDayFiltered = formatDayDisplay(activity.startsAt) === dayFilter;
-                    if (activity.auditorium.name === auditorium && isActivityFromDayFiltered) {
-                      return (
-                        <Activity>
-                          {activity.name}
-                          <JoinButton activityId={ activity.id } activityVacancies={activity?.vacancies} />
-                        </Activity>
-                      );
-                    }
-                  })}
-                </Box>
-                
-              </Box>
-            ))}
-          </Box>
-        )}
-      </Box>
+      )}
     </Box>
   );
 }
