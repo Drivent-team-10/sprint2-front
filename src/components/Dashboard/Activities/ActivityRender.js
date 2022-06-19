@@ -99,7 +99,12 @@ export default function Activities() {
                 {activities.map((activity) => {
                   const isActivityFromDayFiltered = formatDayDisplay(activity.startsAt) === dayFilter;
                   if (activity.auditorium.name === auditorium && isActivityFromDayFiltered) {
-                    return <Activity> {activity.name} </Activity>;
+                    return (
+                        <Activity>
+                          {activity.name}
+                          <JoinButton activityId={ activity.id } activityVacancies={activity?.vacancies} />
+                        </Activity>
+                    );
                   }
                 })}
               </Box>
