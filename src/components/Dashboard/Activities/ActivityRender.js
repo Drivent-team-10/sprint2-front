@@ -6,6 +6,7 @@ import { getActivitiesByEventId } from '../../../services/activityApi';
 import dayjs from 'dayjs';
 import updateLocale from 'dayjs/plugin/updateLocale';
 import Activity from './Activity';
+import JoinButton from './JoinButton';
 
 dayjs.extend(updateLocale);
 
@@ -29,7 +30,7 @@ export default function Activities() {
     try {
       loadActivities();
     } catch (e) {
-      console.log(e);
+      console.error();
     }
   }, []);
 
@@ -74,19 +75,16 @@ export default function Activities() {
 
   function calculateDuration(activity) {
     const startsAt = dayjs(activity.startsAt);
-    const endsAt = dayjs(activity.endsAt)
+    const endsAt = dayjs(activity.endsAt);
 
-    const duration = endsAt.diff(startsAt, 'minutes')
+    const duration = endsAt.diff(startsAt, 'minutes');
 
-    return duration
+    return duration;
   }
-  
+
   function calculateHeight(activity) {
     const duration = calculateDuration(activity);
-
-    //60min    ---> 80px
-    //duration ---> height
-    const height = (80*duration)/60
+    const height = (80 * duration) / 60;
 
     return height;
   }
@@ -116,14 +114,17 @@ export default function Activities() {
                 {activities.map((activity) => {
                   const isActivityFromDayFiltered = formatDayDisplay(activity.startsAt) === dayFilter;
                   if (activity.auditorium.name === auditorium && isActivityFromDayFiltered) {
-                    return <Activity height={calculateHeight(activity)} > 
-                      <Typography style={styles.activityTitle}>
-                      {activity.name} 
-                      </Typography>
-                      <Typography>
-                        { dayjs(activity.startsAt).format('HH:mm') + '-' + dayjs(activity.endsAt).format('HH:mm')}
-                      </Typography>
-                    </Activity>;
+                    return (
+                      <Activity height={calculateHeight(activity)}>
+                        <Box sx={styles.description}>
+                          <Typography style={styles.activityTitle}>{activity.name}</Typography>
+                          <Typography>
+                            {dayjs(activity.startsAt).format('HH:mm') + '-' + dayjs(activity.endsAt).format('HH:mm')}
+                          </Typography>
+                        </Box>
+                        <JoinButton activityId={activity.id} activityVacancies={activity?.vacancies} />
+                      </Activity>
+                    );
                   }
                 })}
               </Box>
@@ -136,8 +137,17 @@ export default function Activities() {
 }
 
 const styles = {
-  container: { display: 'flex', width: '864px', mt: 4, gap: '10px' },
-  auditoriumContainer: { display: 'flex', flexDirection: 'column', width: '33%' },
+  container: {
+    display: 'flex',
+    width: '864px',
+    mt: 4,
+    gap: '10px',
+  },
+  auditoriumContainer: {
+    display: 'flex',
+    flexDirection: 'column',
+    width: '33%',
+  },
   activityContainer: {
     minHeight: '50vh',
     padding: '9px 14px 10px 9px',
@@ -146,7 +156,10 @@ const styles = {
     gap: '10px',
     border: '1px solid #D7D7D7',
   },
+  description: {
+    display: 'block',
+  },
   activityTitle: {
-    fontWeight: '700'
-  }
+    fontWeight: '700',
+  },
 };
