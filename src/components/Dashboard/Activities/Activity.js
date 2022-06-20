@@ -5,7 +5,10 @@ import { BiLogIn } from 'react-icons/bi';
 import { MdOutlineCancel } from 'react-icons/md';
 
 const Activity = styled(Box)`
-  min-height: 80px;
+  padding: 10px 12px;
+  background: #f1f1f1;
+  border-radius: 5px;
+  height: ${props => props.height}px;
   font-weight: 700;
   font-size: 12px;
   line-height: 14px;

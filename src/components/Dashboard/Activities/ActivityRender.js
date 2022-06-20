@@ -68,7 +68,6 @@ export default function Activities() {
 
     for (let activity of activities) {
       const day = formatDayDisplay(activity.startsAt);
-
       if (!result.includes(day)) result.push(day);
     }
     return result;
@@ -76,6 +75,22 @@ export default function Activities() {
 
   function formatDayDisplay(datetime) {
     return dayjs(datetime).format('dddd, DD/MM');
+  }
+
+  function calculateDuration(activity) {
+    const startsAt = dayjs(activity.startsAt);
+    const endsAt = dayjs(activity.endsAt);
+
+    const duration = endsAt.diff(startsAt, 'minutes');
+
+    return duration;
+  }
+
+  function calculateHeight(activity) {
+    const duration = calculateDuration(activity);
+    const height = (80 * duration) / 60;
+
+    return height;
   }
 
   async function enrollInActivity(activityId) {
@@ -113,8 +128,13 @@ export default function Activities() {
                   const isActivityFromDayFiltered = formatDayDisplay(activity.startsAt) === dayFilter;
                   if (activity.auditorium.name === auditorium && isActivityFromDayFiltered) {
                     return (
-                      <Activity onClick={() => enrollInActivity(activity.id)}>
-                        {activity.name}
+                      <Activity height={calculateHeight(activity)}>
+                        <Box sx={styles.description}>
+                          <Typography style={styles.activityTitle}>{activity.name}</Typography>
+                          <Typography>
+                            {dayjs(activity.startsAt).format('HH:mm') + '-' + dayjs(activity.endsAt).format('HH:mm')}
+                          </Typography>
+                        </Box>
                         <JoinButton activityId={activity.id} activityVacancies={activity?.vacancies} />
                       </Activity>
                     );
@@ -130,8 +150,17 @@ export default function Activities() {
 }
 
 const styles = {
-  container: { display: 'flex', width: '864px', mt: 4, gap: '10px' },
-  auditoriumContainer: { display: 'flex', flexDirection: 'column', width: '33%' },
+  container: {
+    display: 'flex',
+    width: '864px',
+    mt: 4,
+    gap: '10px',
+  },
+  auditoriumContainer: {
+    display: 'flex',
+    flexDirection: 'column',
+    width: '33%',
+  },
   activityContainer: {
     minHeight: '50vh',
     padding: '9px 14px 10px 9px',
@@ -139,5 +168,11 @@ const styles = {
     flexDirection: 'column',
     gap: '10px',
     border: '1px solid #D7D7D7',
+  },
+  description: {
+    display: 'block',
+  },
+  activityTitle: {
+    fontWeight: '700',
   },
 };
