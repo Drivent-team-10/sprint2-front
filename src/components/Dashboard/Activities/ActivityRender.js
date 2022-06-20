@@ -111,7 +111,7 @@ export default function Activities() {
                 {activities.map((activity) => {
                   const isActivityFromDayFiltered = formatDayDisplay(activity.startsAt) === dayFilter;
                   if (activity.auditorium.name === auditorium && isActivityFromDayFiltered) {
-                    return <Activity> {activity.name} </Activity>;
+                    return <Activity onClick={() => enrollInActivity(activity.id)}> {activity.name} </Activity>;
                   }
                 })}
               </Box>
