@@ -9,15 +9,16 @@ const Activity = styled(Box)`
   font-weight: 700;
   font-size: 12px;
   line-height: 14px;
-  
+
   display: flex;
   align-items: center;
   justify-content: space-between;
-  
+
   background: #f1f1f1;
   border-radius: 5px;
 
   padding: 10px 12px;
+  cursor: pointer;
 `;
 export default Activity;
 
@@ -27,12 +28,12 @@ export const Join = styled(BiLogIn)`
 `;
 
 export const SoldOff = styled(MdOutlineCancel)`
-  color: #CC6666;
+  color: #cc6666;
   font-size: 30px;
 `;
 
 export const Vacancies = styled.span`
-  color: ${(props) => props.occupation ? '#078632' : '#CC6666'};
+  color: ${(props) => (props.occupation ? '#078632' : '#CC6666')};
   font-weight: 400;
   font-size: 9px;
 `;

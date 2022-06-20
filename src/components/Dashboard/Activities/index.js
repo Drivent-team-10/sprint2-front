@@ -1,12 +1,10 @@
 import usePaymentData from '../../../hooks/api/usePayment';
-import { Box } from '@material-ui/core';
 import { StyledTypography } from '../style';
 import Activities from './ActivityRender';
 import TextWarn from '../../TextWarn';
 
 export default function HotelPage() {
   const { payment } = usePaymentData();
-  if (payment) console.log(payment[0].reservation.type);
   return (
     <>
       <StyledTypography variant="h4">Escolha de atividades</StyledTypography>
