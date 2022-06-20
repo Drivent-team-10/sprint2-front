@@ -8,6 +8,7 @@ import updateLocale from 'dayjs/plugin/updateLocale';
 import Activity from './Activity';
 import useEvent from '../../../hooks/api/useEvent.js';
 import { toast } from 'react-toastify';
+import JoinButton from './JoinButton';
 
 dayjs.extend(updateLocale);
 
@@ -33,7 +34,7 @@ export default function Activities() {
     try {
       loadActivities();
     } catch (e) {
-      console.log(e);
+      console.error();
     }
   }, [event]);
 
@@ -111,7 +112,12 @@ export default function Activities() {
                 {activities.map((activity) => {
                   const isActivityFromDayFiltered = formatDayDisplay(activity.startsAt) === dayFilter;
                   if (activity.auditorium.name === auditorium && isActivityFromDayFiltered) {
-                    return <Activity onClick={() => enrollInActivity(activity.id)}> {activity.name} </Activity>;
+                    return (
+                      <Activity onClick={() => enrollInActivity(activity.id)}>
+                        {activity.name}
+                        <JoinButton activityId={activity.id} activityVacancies={activity?.vacancies} />
+                      </Activity>
+                    );
                   }
                 })}
               </Box>

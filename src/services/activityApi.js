@@ -19,3 +19,13 @@ export async function postActivityEnrollment(eventId, activityId, token) {
 
   return response.data;
 }
+
+export async function getActivityVacancies({ token, activityId }) {
+  const response = await api.get(`activities/${activityId}/occupation`, {
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+  });
+
+  return response.data;
+}
