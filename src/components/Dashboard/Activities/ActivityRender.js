@@ -2,10 +2,12 @@ import { Box, Container, Paper, Typography } from '@material-ui/core';
 import { useEffect, useState } from 'react';
 import Button from '../../Form/Button';
 import useToken from '../../../hooks/useToken';
-import { getActivitiesByEventId } from '../../../services/activityApi';
+import { getActivitiesByEventId, postActivityEnrollment } from '../../../services/activityApi';
 import dayjs from 'dayjs';
 import updateLocale from 'dayjs/plugin/updateLocale';
 import Activity from './Activity';
+import useEvent from '../../../hooks/api/useEvent.js';
+import { toast } from 'react-toastify';
 
 dayjs.extend(updateLocale);
 
@@ -15,6 +17,7 @@ dayjs.updateLocale('en', {
 
 export default function Activities() {
   const token = useToken();
+  const { event } = useEvent();
   const [props, setProps] = useState({});
   const [daysOfEvent, setDaysOfEvent] = useState([]);
   const [activities, setActivities] = useState(null);
@@ -22,8 +25,9 @@ export default function Activities() {
   const [dayFilter, setDayFilter] = useState(null);
 
   useEffect(() => {
+    if (!event) return;
     async function loadActivities() {
-      const response = await getActivitiesByEventId(1, token);
+      const response = await getActivitiesByEventId(event.id, token);
       setActivities(response);
     }
     try {
@@ -31,7 +35,7 @@ export default function Activities() {
     } catch (e) {
       console.log(e);
     }
-  }, []);
+  }, [event]);
 
   useEffect(() => {
     if (!activities) return;
@@ -73,6 +77,15 @@ export default function Activities() {
     return dayjs(datetime).format('dddd, DD/MM');
   }
 
+  async function enrollInActivity(activityId) {
+    try {
+      await postActivityEnrollment(event.id, activityId, token);
+      toast('Você se inscreveu com sucesso!');
+    } catch (e) {
+      console.log(e);
+    }
+  }
+
   return (
     <Box>
       <Typography variant="h4">Escolha de atividades</Typography>
@@ -100,7 +113,7 @@ export default function Activities() {
                   {activities.map((activity) => {
                     const isActivityFromDayFiltered = formatDayDisplay(activity.startsAt) === dayFilter;
                     if (activity.auditorium.name === auditorium && isActivityFromDayFiltered) {
-                      return <Activity> {activity.name} </Activity>;
+                      return <Activity onClick={() => enrollInActivity(activity.id)}> {activity.name} </Activity>;
                     }
                   })}
                 </Box>
