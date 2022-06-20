@@ -63,7 +63,6 @@ export default function Activities() {
 
     for (let activity of activities) {
       const day = formatDayDisplay(activity.startsAt);
-
       if (!result.includes(day)) result.push(day);
     }
     return result;
@@ -71,6 +70,25 @@ export default function Activities() {
 
   function formatDayDisplay(datetime) {
     return dayjs(datetime).format('dddd, DD/MM');
+  }
+
+  function calculateDuration(activity) {
+    const startsAt = dayjs(activity.startsAt);
+    const endsAt = dayjs(activity.endsAt)
+
+    const duration = endsAt.diff(startsAt, 'minutes')
+
+    return duration
+  }
+  
+  function calculateHeight(activity) {
+    const duration = calculateDuration(activity);
+
+    //60min    ---> 80px
+    //duration ---> height
+    const height = (80*duration)/60
+
+    return height;
   }
 
   return (
@@ -98,7 +116,14 @@ export default function Activities() {
                 {activities.map((activity) => {
                   const isActivityFromDayFiltered = formatDayDisplay(activity.startsAt) === dayFilter;
                   if (activity.auditorium.name === auditorium && isActivityFromDayFiltered) {
-                    return <Activity> {activity.name} </Activity>;
+                    return <Activity height={calculateHeight(activity)} > 
+                      <Typography style={styles.activityTitle}>
+                      {activity.name} 
+                      </Typography>
+                      <Typography>
+                        { dayjs(activity.startsAt).format('HH:mm') + '-' + dayjs(activity.endsAt).format('HH:mm')}
+                      </Typography>
+                    </Activity>;
                   }
                 })}
               </Box>
@@ -121,4 +146,7 @@ const styles = {
     gap: '10px',
     border: '1px solid #D7D7D7',
   },
+  activityTitle: {
+    fontWeight: '700'
+  }
 };
